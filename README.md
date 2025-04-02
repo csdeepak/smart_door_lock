@@ -41,8 +41,6 @@ Install these ESP32-specific libraries:
 
 - `WiFi`
 - `ESPAsyncWebServer`
-- `FS`
-- `SD`
 - `SPIFFS`
 
 ### 🔗 Additional Resources
@@ -92,9 +90,9 @@ Install these ESP32-specific libraries:
 
 ## 🙌 Authors & Acknowledgments
 
-- **Deepak**
-- **Gunadeep**
-- **Nirvaan**
+- **C S Deepak**
+- **Chennupati Gunadeep**
+- **Bysani Nirvaan**
 
 ## 📧 Contact
 
