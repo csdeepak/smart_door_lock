@@ -52,30 +52,30 @@ Install these ESP32-specific libraries:
 
 ### 🔹 Step 1: Program & Test ESP32-CAM
 
-1️⃣ Connect ESP32-CAM to FTDI → TX → RX, RX → TX, IO0 → GND (for upload).
-2️⃣ Upload Face Enrollment Code → Get ESP32 IP Address from Serial Monitor.
-3️⃣ Enroll Face via Web Interface → Open ESP32 IP in a browser, click "Enroll Face."
-4️⃣ Reconnect ESP32-CAM to Arduino Mega → TX → Pin 17, RX → Pin 16.
+-1️⃣ Connect ESP32-CAM to FTDI → TX → RX, RX → TX, IO0 → GND (for upload).
+-2️⃣ Upload Face Enrollment Code → Get ESP32 IP Address from Serial Monitor.
+-3️⃣ Enroll Face via Web Interface → Open ESP32 IP in a browser, click "Enroll Face."
+-4️⃣ Reconnect ESP32-CAM to Arduino Mega → TX → Pin 17, RX → Pin 16.
 
 ### 🔹 Step 2: Program & Test Arduino Mega
 
-1️⃣ Connect & Enroll Fingerprint (R307) → Upload fingerprint code, enroll fingerprints.
-2️⃣ Connect & Enroll RFID (RC522) → Upload RFID code, scan and save valid UIDs.
-3️⃣ Test Each Component Individually → Ensure fingerprint and RFID work separately.
+-1️⃣ Connect & Enroll Fingerprint (R307) → Upload fingerprint code, enroll fingerprints.
+-2️⃣ Connect & Enroll RFID (RC522) → Upload RFID code, scan and save valid UIDs.
+-3️⃣ Test Each Component Individually → Ensure fingerprint and RFID work separately.
 
 ### 🔹 Step 3: Integrate & Execute Authentication
 
-1️⃣ Scan RFID Card → If valid, proceed.
-2️⃣ Scan Fingerprint → If valid, proceed.
-3️⃣ Verify Face with ESP32-CAM → If matched, proceed.
-4️⃣ Unlock Door (Activate Relay & Solenoid Lock) → If all three checks pass.
+-1️⃣ Scan RFID Card → If valid, proceed.
+-2️⃣ Scan Fingerprint → If valid, proceed.
+-3️⃣ Verify Face with ESP32-CAM → If matched, proceed.
+-4️⃣ Unlock Door (Activate Relay & Solenoid Lock) → If all three checks pass.
 
 ### 🔹 Step 4: Final Testing & Deployment
 
-✅ Test RFID → Fingerprint → Face Recognition → Lock Opens.
-✅ Mount hardware securely on the door.
-✅ Ensure a stable 12V power supply.
-✅ Add a backup unlock method (Admin card or Wi-Fi).
+-✅ Test RFID → Fingerprint → Face Recognition → Lock Opens.
+-✅ Mount hardware securely on the door.
+-✅ Ensure a stable 12V power supply.
+-✅ Add a backup unlock method (Admin card or Wi-Fi).
 
 ## 💾 Code Repository
 
