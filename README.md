@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# Smart Door Lock System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Description
+A multi-factor authentication-based Smart Door Lock System using Arduino Mega 2560, ESP32-CAM, R307 fingerprint sensor, and RC522 RFID module. The system ensures secure access by verifying an RFID card, a fingerprint scan, and facial recognition before unlocking the door.
 
-## Available Scripts
+## 🛠 Features
+- RFID authentication with RC522
+- Fingerprint verification with R307
+- Face recognition using ESP32-CAM
+- OLED display for status updates
+- Relay-controlled solenoid lock
+- Multi-step authentication for enhanced security
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Installation & Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
+Ensure you have the following installed:
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- [ESP32 Board Package](https://github.com/espressif/arduino-esp32)
+- [Node.js & npm](https://nodejs.org/)
+- [React.js](https://react.dev/)
+- [TailwindCSS](https://tailwindcss.com/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Step 1: Clone Repository
+```sh
+ git clone https://github.com/your-repo/smart-door-lock.git
+ cd smart-door-lock
+```
 
-### `npm test`
+### Step 2: Install Dependencies
+#### Backend & Firmware
+```sh
+ cd firmware
+ npm install
+```
+#### Frontend (React App)
+```sh
+ cd frontend
+ npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Step 3: Upload Code
+- **ESP32-CAM**: Upload the face recognition firmware using the Arduino IDE.
+- **Arduino Mega 2560**: Upload the authentication and locking mechanism code.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🎮 Usage
+### Authentication Flow
+1️⃣ Scan an authorized RFID card → Proceed if valid.
+2️⃣ Scan a registered fingerprint → Proceed if valid.
+3️⃣ Face recognition via ESP32-CAM → Proceed if matched.
+4️⃣ Unlock door (Relay & Solenoid activation) → Only if all three checks pass.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Step-by-Step Execution
+#### 🔹 Step 1: Program & Test ESP32-CAM
+1️⃣ Connect ESP32-CAM to FTDI → TX → RX, RX → TX, IO0 → GND (for upload).
+2️⃣ Upload Face Enrollment Code → Get ESP32 IP Address from Serial Monitor.
+3️⃣ Enroll Face via Web Interface → Open ESP32 IP in a browser, click "Enroll Face."
+4️⃣ Reconnect ESP32-CAM to Arduino Mega → TX → Pin 17, RX → Pin 16.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 🔹 Step 2: Program & Test Arduino Mega
+1️⃣ Connect & Enroll Fingerprint (R307) → Upload fingerprint code, enroll fingerprints.
+2️⃣ Connect & Enroll RFID (RC522) → Upload RFID code, scan and save valid UIDs.
+3️⃣ Test Each Component Individually → Ensure fingerprint and RFID work separately.
 
-### `npm run eject`
+#### 🔹 Step 3: Integrate & Execute Authentication
+✅ Scan RFID Card → If valid, proceed.
+✅ Scan Fingerprint → If valid, proceed.
+✅ Verify Face with ESP32-CAM → If matched, proceed.
+✅ Unlock Door (Activate Relay & Solenoid Lock) → If all three checks pass.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### 🔹 Step 4: Final Testing & Deployment
+- Test full authentication sequence.
+- Securely mount hardware on the door.
+- Ensure a stable 12V power supply.
+- Implement a backup unlock method (Admin card or Wi-Fi access).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📜 Circuit Diagram & Connections
+Refer to the [circuit diagram PDF](https://github.com/your-repo/smart-door-lock/blob/main/docs/connections.pdf) for detailed wiring and component connections.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🔗 Source Code
+- **Arduino Code**: [Arduino Mega firmware](https://github.com/your-repo/smart-door-lock/blob/main/firmware/arduino)
+- **ESP32-CAM Code**: [ESP32-CAM firmware](https://github.com/your-repo/smart-door-lock/blob/main/firmware/esp32)
+- **Web UI Source Code**: [React App](https://github.com/your-repo/smart-door-lock/blob/main/frontend)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⚙️ Configuration
+Ensure the correct libraries are installed before compiling:
+### Arduino Mega Dependencies
+- [Adafruit Fingerprint Sensor Library](https://github.com/adafruit/Adafruit-Fingerprint-Sensor-Library)
+- [MFRC522 RFID Library](https://github.com/miguelbalboa/rfid)
+- [Wire.h for OLED Display](https://www.arduino.cc/en/reference/wire)
 
-### Code Splitting
+### ESP32-CAM Dependencies
+- [ESP32 Camera Library](https://github.com/espressif/esp32-camera)
+- [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🤝 Contributing
+We welcome contributions! Follow these steps:
+1. Fork the repository.
+2. Create a new branch (`feature-name`).
+3. Commit your changes.
+4. Push to your fork.
+5. Submit a Pull Request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📝 License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 👨‍💻 Authors & Acknowledgements
+- **[Your Name]** - Developer & Maintainer
+- Special thanks to contributors and open-source libraries used in this project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📬 Contact
+For support or inquiries, reach out via:
+📧 Email: your-email@example.com  
+🔗 GitHub Issues: [Report a Bug](https://github.com/your-repo/smart-door-lock/issues)
