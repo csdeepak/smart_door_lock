@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function AuthStatus({ esp32IP }) {
   const [status, setStatus] = useState({
-    fingerprint: 'Loading...',
     rfid: 'Loading...',
+    fingerprint: 'Loading...',
     camera: 'Loading...'
   });
 
@@ -15,19 +15,25 @@ export default function AuthStatus({ esp32IP }) {
         setStatus(data);
       } catch (error) {
         console.error('Status fetch error:', error);
+        setStatus({
+          rfid: 'Unavailable',
+          fingerprint: 'Unavailable',
+          camera: 'Unavailable'
+        });
       }
     };
-    
+
     fetchStatus();
-    const interval = setInterval(fetchStatus, 3000);
+    const interval = setInterval(fetchStatus, 2000);
     return () => clearInterval(interval);
   }, [esp32IP]);
 
-  const getStatusColor = (status) => {
-    switch(status.toLowerCase()) {
+  const getStatusColor = (sensorStatus) => {
+    switch (sensorStatus?.toLowerCase()) {
       case 'ready': return 'bg-green-500';
+      case 'scanned': return 'bg-blue-500';
+      case 'verified': return 'bg-green-600';
       case 'scanning': return 'bg-yellow-500';
-      case 'active': return 'bg-blue-500';
       default: return 'bg-gray-500';
     }
   };
@@ -36,14 +42,19 @@ export default function AuthStatus({ esp32IP }) {
     <div className="bg-gray-800 p-4 rounded-lg">
       <h3 className="text-lg font-semibold mb-3">Authentication Status</h3>
       <div className="space-y-2">
-        <div className="flex items-center">
-          <div className={`w-3 h-3 rounded-full mr-2 ${getStatusColor(status.fingerprint)}`}></div>
-          <span>Fingerprint: {status.fingerprint}</span>
-        </div>
+        {/* RFID */}
         <div className="flex items-center">
           <div className={`w-3 h-3 rounded-full mr-2 ${getStatusColor(status.rfid)}`}></div>
           <span>RFID: {status.rfid}</span>
         </div>
+
+        {/* Fingerprint */}
+        <div className="flex items-center">
+          <div className={`w-3 h-3 rounded-full mr-2 ${getStatusColor(status.fingerprint)}`}></div>
+          <span>Fingerprint: {status.fingerprint}</span>
+        </div>
+
+        {/* Camera */}
         <div className="flex items-center">
           <div className={`w-3 h-3 rounded-full mr-2 ${getStatusColor(status.camera)}`}></div>
           <span>Camera: {status.camera}</span>

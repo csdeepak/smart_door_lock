@@ -2,34 +2,35 @@ import React, { useEffect, useState } from 'react';
 
 export default function CameraFeed({ esp32IP }) {
   const [status, setStatus] = useState('Waiting for Face Scan...');
-  const [ws, setWs] = useState(null);
 
   useEffect(() => {
-    // WebSocket connection to receive face recognition updates
-    const socket = new WebSocket('ws://localhost:3001');
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (message.type === 'face_recognition') {
+    const fetchStatus = async () => {
+      try {
+        const response = await fetch(`http://${esp32IP}/auth_status`);
+        const data = await response.json();
         setStatus(
-          message.data.status === 'Success'
-            ? '✅ Face Recognized!'
-            : '❌ No Face Detected'
+          data.camera === 'scanning'
+            ? '🟡 Scanning...'
+            : data.camera === 'verified'
+            ? '✅ Face Scan Complete'
+            : '⏳ Waiting for Face Scan...'
         );
+      } catch (error) {
+        setStatus('❌ Camera status unavailable');
       }
     };
-    setWs(socket);
 
-    return () => {
-      socket.close();
-    };
-  }, []);
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 2000);
+    return () => clearInterval(interval);
+  }, [esp32IP]);
 
   return (
     <div className="bg-black rounded-lg overflow-hidden relative">
       {/* Camera Feed */}
       <div className="aspect-video">
         <img
-          src="http://localhost:3001/camera-feed"
+          src="http://192.168.125.55:81/stream" // ✅ Stream directly from ESP32-CAM
           alt="Live Camera Feed"
           className="w-full h-full object-cover"
           onError={(e) => {
@@ -38,6 +39,7 @@ export default function CameraFeed({ esp32IP }) {
           }}
         />
       </div>
+
       {/* Status Indicator */}
       <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-center p-2">
         {status}
